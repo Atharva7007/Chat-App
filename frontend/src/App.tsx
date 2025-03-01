@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import Chat from "./Chat";
+import { SocketProvider } from "./SocketContext";
 
 const App: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -12,13 +13,15 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      {!isLoggedIn ? (
-        <Login onLogin={handleLogin} />
-      ) : (
-        <Chat username={username} />
-      )}
-    </div>
+    <SocketProvider>
+      <div>
+        {!isLoggedIn ? (
+          <Login onLogin={handleLogin} />
+        ) : (
+          <Chat username={username} />
+        )}
+      </div>
+    </SocketProvider>
   );
 };
 

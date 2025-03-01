@@ -7,16 +7,13 @@ const kafka = new Kafka({
 
 const producer = kafka.producer();
 
-const run = async () => {
+const run = async (message) => {
   try {
     await producer.connect();
-    console.log("Producer connected successfully!");
-
     await producer.send({
       topic: "my-topic",
-      messages: [{ value: "Hi from producer.js" }],
+      messages: [{ value: message }],
     });
-    console.log("Message sent!");
   } catch (error) {
     console.log("Got an error: ", error);
   } finally {

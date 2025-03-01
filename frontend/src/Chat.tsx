@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { io, Socket } from "socket.io-client";
+import { useSocket } from "./SocketContext";
 
 interface Message {
   content: string;
@@ -10,11 +10,10 @@ interface ChatProps {
   username: string; // Receive the username as a prop
 }
 
-const socket: Socket = io("http://localhost:3000");
-
 const Chat: React.FC<ChatProps> = ({ username }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
+  const socket = useSocket(); // Get the socket instance from context
 
   useEffect(() => {
     socket.on("message", (message: Message) => {
